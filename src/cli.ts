@@ -1,5 +1,6 @@
 import { Command, CommanderError } from 'commander';
 import { registerAuthCommands } from './commands/auth.js';
+import { suggestCommand } from './suggest.js';
 import { registerBackupCommands } from './commands/backups.js';
 import { registerDeployCommand } from './commands/deploy.js';
 import { registerExecCommand } from './commands/exec.js';
@@ -18,8 +19,20 @@ export function buildProgram(): Command {
         .name('aclclouds')
         .description('Manage, deploy and debug your ACLClouds game servers, Discord bots and VPS.')
         .version(VERSION, '-v, --version')
-        .showHelpAfterError('(run `aclclouds --help` for usage)')
+        .showHelpAfterError('(run `aclclouds help` to see the available commands)')
         .exitOverride();
+
+    // Unknown word after `aclclouds`: say how to get help, and suggest the closest command.
+    program.on('command:*', (operands: string[]) => {
+        const typed = operands[0] ?? '';
+        const known = program.commands.flatMap((command) => [command.name(), ...command.aliases()]);
+        const suggestion = suggestCommand(typed, known);
+        process.stderr.write(
+            `error: unknown command '${typed}'.${suggestion ? ` Did you mean '${suggestion}'?` : ''}\n` +
+                'Run `aclclouds help` to see the available commands.\n',
+        );
+        process.exit(2);
+    });
 
     registerAuthCommands(program);
     registerServiceCommands(program);
