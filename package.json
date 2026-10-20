@@ -1,6 +1,6 @@
 {
   "name": "aclclouds",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official ACLClouds CLI and local MCP server: manage, deploy and debug your game servers, Discord bots and VPS from the terminal or an AI assistant.",
   "keywords": ["aclclouds", "cli", "mcp", "model-context-protocol", "game-server", "discord-bot", "vps", "deploy"],
   "homepage": "https://aclclouds.com",

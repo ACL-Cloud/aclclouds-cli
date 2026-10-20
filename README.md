@@ -245,4 +245,4 @@ bun test            # unit tests
 bun run build       # writes dist/index.js (bundle)
 ```
 
-Releases: bump `version` in `package.json` and `src/version.ts`, then push a tag `v<version>`. The GitHub workflow publishes to npm with the `NPM_TOKEN` secret.
+Releases: bump `version` in `package.json`, commit, then push a tag `v<version>` that matches it. The GitHub workflow publishes to npm with the `NPM_TOKEN` secret.
